@@ -6,8 +6,8 @@ from pytextforge.file import read_file, write_file
 from pytextforge.forge import generate_output
 from pytextforge.inputs import load_data, load_json, process_data
 from pytextforge.messages import MessageManager
+from pytextforge.metadata import VERSION
 
-VERSION = 'v0.0.1'
 MM = MessageManager()
 
 def validate_output(outputpath: str, force: bool) -> str:
