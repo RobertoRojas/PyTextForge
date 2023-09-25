@@ -23,7 +23,7 @@ def validate_output(outputpath: str, force: bool) -> str:
         return f'Cannot create the output file[{outputpath}]'
     return None
 
-def validate_file(value: str) -> str:
+def template_file(value: str) -> str:
     if not os.path.isfile(path=value):
         raise argparse.ArgumentTypeError(f"The template path[{value}] doesn't exist or is not a file")
     return os.path.realpath(value)
@@ -34,23 +34,23 @@ def __validate(value: str, load: any) -> dict:
         raise argparse.ArgumentTypeError(err)
     return {'id': id, 'data': data}
 
-def validate_data(value: str) -> dict:
+def plain_data(value: str) -> dict:
     return __validate(value=value, load=load_data)
 
-def validate_json(value: str) -> dict:
+def json_data(value: str) -> dict:
     return __validate(value=value, load=load_json)
 
 def parse_arguments(args: list) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='TODO')
     parser.add_argument('--version', action='version', version=VERSION, \
                         help='Shows the version of the module')
-    parser.add_argument('--template', dest='template', type=validate_file, \
+    parser.add_argument('--template', dest='template', type=template_file, \
                         required=True, help='Set the template file path')
     parser.add_argument('--output', dest='output', type=str, \
                         required=True, help='Set the output file path, if the file already exist, use --force to overwrite it')
-    parser.add_argument('-d', '--data', action='append', dest='data', type=validate_data, \
+    parser.add_argument('-d', '--data', action='append', dest='data', type=plain_data, \
                         help='Set data in plain text')
-    parser.add_argument('-j', '--json', action='append', dest='data', type=validate_json, \
+    parser.add_argument('-j', '--json', action='append', dest='data', type=json_data, \
                         help='Set data in JSON format')
     parser.add_argument('-f', '--force', action='store_true', dest='force', \
                         help='Delete the output file if exist')
