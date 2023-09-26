@@ -2,11 +2,12 @@ import argparse
 import os
 import sys
 
-from pytextforge.file import read_file, write_file
-from pytextforge.forge import generate_output
-from pytextforge.inputs import load_data, load_json, process_data
-from pytextforge.messages import MessageManager
-from pytextforge.metadata import VERSION
+#pytextforge.
+from file import read_file, write_file
+from forge import generate_output
+from inputs import load_data, load_json, load_file_content, process_data
+from messages import MessageManager
+from metadata import VERSION
 
 MM = MessageManager()
 
@@ -34,11 +35,25 @@ def __validate(value: str, load: any) -> dict:
         raise argparse.ArgumentTypeError(err)
     return {'id': id, 'data': data}
 
+def __validate_file(value: str, load: any) -> dict:
+    print('HERE')
+    value, err = load_file_content(string=value)
+    print(f'{err}')
+    if err:
+        raise argparse.ArgumentTypeError(err)
+    return __validate(value=value, load=load)
+
 def plain_data(value: str) -> dict:
     return __validate(value=value, load=load_data)
 
 def json_data(value: str) -> dict:
     return __validate(value=value, load=load_json)
+
+def plain_data_file(value: str) -> dict:
+    return __validate_file(value=value, load=load_data)
+
+def json_data_file(value: str) -> dict:
+    return __validate_file(value=value, load=load_json)
 
 def parse_arguments(args: list) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='TODO')
@@ -52,6 +67,10 @@ def parse_arguments(args: list) -> argparse.Namespace:
                         help='Set data in plain text')
     parser.add_argument('-j', '--json', action='append', dest='data', type=json_data, \
                         help='Set data in JSON format')
+    parser.add_argument('--data-file', action='append', dest='data', type=plain_data_file, \
+                        help='Set data in plain text from a file')
+    parser.add_argument('--json-file', action='append', dest='data', type=json_data_file, \
+                        help='Set data in JSON format from a file')
     parser.add_argument('-f', '--force', action='store_true', dest='force', \
                         help='Delete the output file if exist')
     parser.add_argument('-v', '--verbose', action='count', default=0, dest='verbose', \

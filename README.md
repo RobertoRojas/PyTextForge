@@ -74,6 +74,65 @@ The list of elements is:
 
 ```
 
+### Data from files
+
+You can get the data from a file, it can be a plain text or a json format data.
+
+#### Template
+
+```Plain
+In this example we got the follow files contents:
+
+info.txt
+-----
+{{ infoplain }}
+-----
+
+info.json
+-----
+{{ infojson.info }}
+-----
+```
+
+#### info.txt
+
+```Plain
+This is the info
+
+from the plain file
+```
+
+#### info.json
+
+```JSON
+{"info": "This is the info from\nthe json file..."}
+```
+
+#### Command
+
+```Bash
+python -m pytextforge --data-file 'infoplain=info.txt' --json-file 'infojson=info.json' --template template.temp --output output.txt;
+```
+
+#### Output
+
+```Plain
+In this example we got the follow files contents:
+
+info.txt
+-----
+This is the info
+
+from the plain file
+-----
+
+info.json
+-----
+This is the info from
+the json file...
+-----
+```
+
 ### Overwrite data
 
 If you provide data with the same ID more than once, the argument of the left will be overwrited. If the data is empty, that argument will be ignored. This way, you can control overwrites.
