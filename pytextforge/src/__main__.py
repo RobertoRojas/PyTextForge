@@ -35,9 +35,7 @@ def __validate(value: str, load: any) -> dict:
     return {'id': id, 'data': data}
 
 def __validate_file(value: str, load: any) -> dict:
-    print('HERE')
     value, err = load_file_content(string=value)
-    print(f'{err}')
     if err:
         raise argparse.ArgumentTypeError(err)
     return __validate(value=value, load=load)
