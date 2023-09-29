@@ -2,12 +2,11 @@ import argparse
 import os
 import sys
 
-#pytextforge.
-from file import read_file, write_file
-from forge import generate_output
-from inputs import load_data, load_json, load_file_content, process_data
-from messages import MessageManager
-from metadata import VERSION
+from pytextforge.file import read_file, write_file
+from pytextforge.forge import generate_output
+from pytextforge.inputs import load_data, load_json, load_file_content, process_data
+from pytextforge.messages import MessageManager
+from pytextforge.metadata import VERSION
 
 MM = MessageManager()
 
