@@ -162,3 +162,4 @@ cython_debug/
 # PyTextForge
 
 pytextforge/src/metadata.py
+ut/output.txt

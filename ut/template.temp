@@ -1,0 +1,8 @@
+This is a list:
+
+- {{ simpledata }}
+- {{ js.content }}
+- {{ fromfile }}
+- {{ fromjsonfile.content }}
+- {{ overwrite1 }}
+- {{ overwrite2 }}

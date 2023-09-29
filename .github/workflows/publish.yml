@@ -20,7 +20,13 @@ jobs:
       run: python -m pip install setuptools wheel twine
     
     - name: Create package
-      run: cd pytextforge && python setup.py sdist bdist_wheel  
+      run: cd ./pytextforge && python setup.py sdist bdist_wheel
+
+    - name: Install package locally
+      run: python -m pip install ./pytextforge/dist/pytextforge-*-py3-none-any.whl
+
+    - name: Perform UT
+      run: cd ut && python -m pytextforge --template template.temp --output output.txt --data simpledata=CONTENT_FROM_DATA --json 'js={"content":"CONTENT_FROM_JSON"}' --data-file fromfile=content.txt --json-file fromjsonfile=test.json --data overwrite1=OVER1 --data overwrite1= --data overwrite2=THIS_SHOULD_NOT_BE_THERE --data overwrite2=OVER2;
 
     - name: Push package
-      run: cd pytextforge && twine upload dist/* -u __token__ -p "${{ secrets.PYPI }}"
+      run: cd ./pytextforge && twine upload dist/* -u __token__ -p "${{ secrets.PYPI }}"
